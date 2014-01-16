@@ -67,6 +67,32 @@ HTTP_MOCK_DATA['/projects/1/issues.json?status_id=closed&tracker_id=1'] = \
             },
         ]
     })
+# Sample Users
+HTTP_MOCK_DATA['/users.json'] = \
+    json.dumps({
+        'users': [
+            {
+                'id': 1,
+                'login': 'test',
+                'firstname': 'test',
+                'lastname': 'test',
+                'mail': 'test@testmail.com',
+                'created_on': '2013-09-12T08:37:38Z',
+                'last_login_on': '2014-01-16T02:42:08Z',
+            },
+        ]
+    })
+
+# Sample Trackers
+HTTP_MOCK_DATA['/enumerations/time_entry_activities.json'] = \
+    json.dumps({
+        'time_entry_activities': [
+            {
+                'id': 1,
+                'name': 'Design',
+            },
+        ]
+    })
 
 # Parameter order not gauranteed, just cover both
 HTTP_MOCK_DATA['/projects/1/issues.json?tracker_id=1&status_id=closed'] = \
@@ -101,6 +127,15 @@ class TestProjectsAndIssues(TestCase):
         '''
         self.test_redmine = Redmine("http://no-route.none")
         self.test_redmine.open_raw = Mock(side_effect=mock_open_raw)
+
+    def test_get_users(self):
+        '''
+        Test that requests users returns users
+        '''
+        users = self.test_redmine.users
+
+        for user in users:
+            assert user.firstname == 'test'
 
     def test_get_project(self):
         '''
