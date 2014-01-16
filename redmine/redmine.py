@@ -473,8 +473,8 @@ class User(Redmine_Item):
     mail = None
     auth_source_id = None
     created_on = None
-    _query_container = 'time_entry_activities'
-    _query_path = '/enumerations/time_entry_activities.json'
+    _query_container = 'users'
+    _query_path = '/users.json'
 
 
 class Wiki_Page(Redmine_Item):
